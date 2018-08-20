@@ -71,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
             return
         obj_dict = storage.all(args[0])
         try:
-            eval(args[0])
+            models.classes[args[0]]()
         except NameError:
             print("** class doesn't exist **")
             return
