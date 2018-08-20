@@ -88,3 +88,16 @@ class DBStorage:
             Remove private session attribute
         '''
         self.__session.close()
+
+    def get(self, cls, id):
+        """Method to retrieve Objects"""
+        for value in self.all(cls).values():
+            if value.id == id:
+                return value
+        return None
+
+    def count(self, cls=None):
+        """Method to retrieve count of class"""
+        if cls is not None:
+            return len(self.all(cls).values())
+        return len(self.all(""))
