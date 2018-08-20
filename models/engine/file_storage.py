@@ -82,9 +82,12 @@ class FileStorage:
         '''
             gets a specific 'cls' object with matching 'id'
         '''
-        for value in self.all(cls).values():
-            if value.id == id:
-                return value
+        try:
+            for value in self.all(cls).values():
+                if value.id == id:
+                    return value
+        except:
+            return None
         return None
 
     def count(self, cls=None):
