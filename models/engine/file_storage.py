@@ -18,13 +18,13 @@ class FileStorage:
             Return the dictionary
         '''
         new_dict = {}
-        if cls is None:
+        if cls is None or cls is "":
             return self.__objects
 
-        if isinstance(cls, str) is False:
-            cls = cls.__name__
+        if isinstance(cls, str) is True:
+            cls = models.classes[cls]
         for k, v in self.__objects.items():
-            if cls == k.split(".")[0]:
+            if isinstance(v, cls):
                 new_dict[k] = v
         return new_dict
 
