@@ -21,15 +21,12 @@ class FileStorage:
         if cls is None:
             return self.__objects
 
-        if cls != "":
-            if isinstance(cls, str) is False:
-                cls = cls.__name__
-            for k, v in self.__objects.items():
-                if cls == k.split(".")[0]:
-                    new_dict[k] = v
-            return new_dict
-        else:
-            return self.__objects
+        if isinstance(cls, str) is False:
+            cls = cls.__name__
+        for k, v in self.__objects.items():
+            if cls == k.split(".")[0]:
+                new_dict[k] = v
+        return new_dict
 
     def new(self, obj):
         '''
@@ -85,7 +82,7 @@ class FileStorage:
         '''
             gets a specific 'cls' object with matching 'id'
         '''
-        for value in self.all(cls):
+        for value in self.all(cls).values():
             if value.id == id:
                 return value
         return None
