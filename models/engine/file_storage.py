@@ -22,6 +22,8 @@ class FileStorage:
             return self.__objects
 
         if cls != "":
+            if isinstance(cls, str) is False:
+                cls = cls.__name__
             for k, v in self.__objects.items():
                 if cls == k.split(".")[0]:
                     new_dict[k] = v
@@ -66,7 +68,7 @@ class FileStorage:
 
     def delete(self, obj=None):
         '''
-        Deletes an obj
+            Deletes an obj
         '''
         if obj is not None:
             key = str(obj.__class__.__name__) + "." + str(obj.id)
@@ -75,6 +77,24 @@ class FileStorage:
 
     def close(self):
         '''
-        Deserialize JSON file to objects
+            Deserialize JSON file to objects
         '''
         self.reload()
+
+    def get(self, cls, id):
+        '''
+            gets a specific 'cls' object with matching 'id'
+        '''
+        for value in self.all(cls):
+            if value.id == id:
+                return value
+        return None
+
+    def count(self, cls=None):
+        '''
+           returns the number of 'cls' object or all the objects
+        '''
+        if cls is None:
+            return len(self.all())
+        else:
+            return len(self.all(cls))
