@@ -40,9 +40,9 @@ class DBStorage:
 
         if cls is not None and cls is not "":
             if isinstance(cls, str) is False:
-                cls = cls.__name__
-
-            objs = self.__session.query(models.classes[cls]).all()
+                objs = self.__session.query(cls).all()
+            else:
+                objs = self.__session.query(models.classes[cls]).all()
             for obj in objs:
                 key = "{}.{}".format(obj.__class__.__name__, obj.id)
                 db_dict[key] = obj
