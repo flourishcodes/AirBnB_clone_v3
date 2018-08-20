@@ -38,16 +38,15 @@ class DBStorage:
         '''
         db_dict = {}
 
-        if cls is not None:
+        if cls is not None and cls is not "":
             if isinstance(cls, str) is False:
                 cls = cls.__name__
 
-            if cls != "":
-                objs = self.__session.query(models.classes[cls]).all()
-                for obj in objs:
-                    key = "{}.{}".format(obj.__class__.__name__, obj.id)
-                    db_dict[key] = obj
-                return db_dict
+            objs = self.__session.query(models.classes[cls]).all()
+            for obj in objs:
+                key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                db_dict[key] = obj
+            return db_dict
         else:
             for k, v in models.classes.items():
                 if k != "BaseModel":
@@ -94,14 +93,21 @@ class DBStorage:
         self.__session.close()
 
     def get(self, cls, id):
-        """Method to retrieve Objects"""
-        for value in self.all(cls).values():
-            if value.id == id:
-                return value
+        '''
+            Method to retrieve Objects
+        '''
+        try:
+            for value in self.all(cls).values():
+                if value.id == id:
+                    return value
+        except:
+            return None
         return None
 
     def count(self, cls=None):
-        """Method to retrieve count of class"""
+        '''
+            Method to retrieve count of class
+        '''
         if cls is not None:
             return len(self.all(cls).values())
-        return len(self.all(""))
+        return len(self.all())
