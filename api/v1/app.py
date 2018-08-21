@@ -30,4 +30,4 @@ if __name__ == "__main__":
     port = getenv('HBNB_API_PORT')
     if port is None:
         port = 5000
-    app.run(host, int(port))
+    app.run(host, int(port), threaded=True)
