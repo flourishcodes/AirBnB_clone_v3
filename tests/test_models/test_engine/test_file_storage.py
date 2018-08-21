@@ -128,3 +128,29 @@ class testFileStorage(unittest.TestCase):
             Test State model in Filestorage
         '''
         self.assertTrue(isinstance(storage, FileStorage))
+
+    def test_get(self):
+        '''
+            Test for get method in filestorage
+        '''
+        fs = FileStorage()
+        new_state = State()
+        fs.new(new_state)
+        new_id = new_state.id
+        fs.save()
+        return_state = fs.get(State, new_id)
+        self.assertTrue(new_id == return_state.id)
+        self.assertTrue(new_state.id == return_state.id)
+        self.assertTrue(isinstance(return_state, State))
+
+    def test_count(self):
+        '''
+           Test count to confirm number of objects are returned
+        '''
+        fs2 = FileStorage()
+        for i in range(4):
+            new_state = State()
+            new_state.save()
+        self.assertEqual(fs2.count(), 9)
+        num_state = self.storage.count()
+        self.assertEqual(self.storage.count(State), 4)
