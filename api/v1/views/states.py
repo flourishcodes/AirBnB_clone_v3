@@ -6,7 +6,7 @@ from api.v1 import app
 import models
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/', methods=['GET'])
 @app_views.route('/states/<state_id>', methods=['GET'])
 def all_states(state_id=None):
     '''Returns all states object in json format'''
@@ -33,3 +33,16 @@ def create_state():
     new_ins = state_class(**form)
     new_ins.save()
     return jsonify(new_ins.to_dict())
+
+
+@app_views.route('/states/<state_id>', methods=['DELETE'])
+def delete_state(state_id):
+    '''Deletes a state object'''
+    try:
+        state_obj = storage.get('State', state_id)
+        storage.delete(state_obj)
+        storage.save()
+    except:
+        abort(404)
+        return jsonify({})
+    return jsonify({})
