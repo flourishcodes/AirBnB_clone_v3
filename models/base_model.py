@@ -32,12 +32,12 @@ class BaseModel:
         else:
             if kwargs.get("created_at"):
                 kwargs["created_at"] = datetime.strptime(
-                    kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                    kwargs["created_at"], "%Y-%m-%dT%H:%M:%S")
             else:
                 self.created_at = datetime.now()
             if kwargs.get("created_at"):
                 kwargs["updated_at"] = datetime.strptime(
-                    kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                    kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S")
             else:
                 self.updated_at = datetime.now()
             for key, val in kwargs.items():
@@ -74,8 +74,8 @@ class BaseModel:
         '''
         cp_dct = dict(self.__dict__)
         cp_dct['__class__'] = self.__class__.__name__
-        cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S")
+        cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S")
         if hasattr(self, "_sa_instance_state"):
             del cp_dct["_sa_instance_state"]
         return (cp_dct)
