@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from models import storage
 from api.v1 import app
+import models
 
-@app_views.route('/states/', methods=['GET'])
+
+@app_views.route('/states', methods=['GET'])
 @app_views.route('/states/<state_id>', methods=['GET'])
 def all_states(state_id=None):
     '''Returns all states object in json format'''
@@ -18,3 +20,16 @@ def all_states(state_id=None):
         return jsonify(json_list)
     except:
         abort(404)
+
+
+@app_views.route('/states', methods=['POST'])
+def create_state():
+    '''Creates an instance of State and save it to storage'''
+    form = request.get_json(force=True)
+    if 'name' not in form:
+        abort(400)
+        return jsonify({"error": "Missing Name"})
+    state_class = models.classes['State']
+    new_ins = state_class(**form)
+    new_ins.save()
+    return jsonify(new_ins.to_dict())
