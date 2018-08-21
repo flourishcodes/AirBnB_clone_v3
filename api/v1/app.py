@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Python api built with flask"""
-from flask import Flask
+from flask import Flask, jsonify, make_response
 import models
 from models import storage
 from api.v1.views import app_views
@@ -13,8 +13,14 @@ app.url_map.strict_slases = False
 
 @app.teardown_appcontext
 def tear_down(exception):
-    """Calls storage close on appcontext"""
+    '''Calls storage close on appcontext'''
     storage.close()
+
+
+@app.errorhandler(404)
+def error_handler(error):
+    '''Returns a JSON formatted 404 status code'''
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == "__main__":

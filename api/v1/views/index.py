@@ -12,7 +12,7 @@ def status():
 
 @app_views.route('/stats')
 def stats():
-    """Returns the classes with their instance counts"""
+    '''Returns the classes with their instance counts'''
     stat = {
         'amenities': storage.count('Amenity'),
         'cities': storage.count('City'),
