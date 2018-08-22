@@ -20,12 +20,14 @@ class FileStorage:
         new_dict = {}
         if cls is None or cls is "":
             return self.__objects
-
-        if isinstance(cls, str) is True:
-            cls = models.classes[cls]
-        for k, v in self.__objects.items():
-            if isinstance(v, cls):
-                new_dict[k] = v
+        try:
+            if isinstance(cls, str) is True:
+                cls = models.classes[cls]
+            for k, v in self.__objects.items():
+                if isinstance(v, cls):
+                    new_dict[k] = v
+        except Exception:
+            new_dict = {}
         return new_dict
 
     def new(self, obj):
