@@ -58,6 +58,8 @@ def attrib_update(obj, **args):
 def create_city(state_id):
     '''Creates a new City'''
     form = request.get_json(force=True)
+    if storage.get('State', state_id) is None:
+        abort(404)
     if 'name' not in request.json:
         return jsonify({"error": "Missing Name"}), 400
     city_class = models.classes['City']
