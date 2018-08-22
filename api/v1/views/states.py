@@ -22,6 +22,18 @@ def all_states(state_id=None):
         abort(404)
 
 
+def attrib_update(obj, **args):
+    '''Helper function to update objects attributes to correct types'''
+    for key, value in args.items():
+        if hasattr(obj, key):
+            value = value.replace("_", " ")
+            try:
+                value = eval(value)
+            except:
+                pass
+            setattr(obj, key, value)
+
+
 @app_views.route('/states/', methods=['POST'])
 def create_state():
     '''Creates an instance of State and save it to storage'''
@@ -29,7 +41,8 @@ def create_state():
     if 'name' not in request.json:
         return jsonify({"error": "Missing Name"}), 401
     state_class = models.classes['State']
-    new_state = state_class(**form)
+    new_state = state_class()
+    attrib_update(new_state, **form)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 

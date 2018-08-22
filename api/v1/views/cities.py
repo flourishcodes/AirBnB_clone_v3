@@ -42,6 +42,18 @@ def delete_city(city_id):
         return jsonify({}), 200
 
 
+def attrib_update(obj, **args):
+    '''Helper function to update objects attributes to correct types'''
+    for key, value in args.items():
+        if hasattr(obj, key):
+            value = value.replace("_", " ")
+            try:
+                value = eval(value)
+            except:
+                pass
+            setattr(obj, key, value)
+
+
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
     '''Creates a new City'''
@@ -49,7 +61,8 @@ def create_city(state_id):
     if 'name' not in request.json:
         return jsonify({"error": "Missing Name"}), 401
     city_class = models.classes['City']
-    new_city = city_class(**form)
+    new_city = city_class()
+    attrib_update(new_city, **form)
     setattr(new_city, 'state_id', state_id)
     new_city.save()
     return jsonify(new_city.to_dict()), 201
