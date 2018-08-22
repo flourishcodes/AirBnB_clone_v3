@@ -18,7 +18,7 @@ def all_states(state_id=None):
         else:
             json_list = storage.get('State', state_id).to_dict()
         return jsonify(json_list)
-    except:
+    except Exception:
         abort(404)
 
 
@@ -27,11 +27,11 @@ def create_state():
     '''Creates an instance of State and save it to storage'''
     form = request.get_json(force=True)
     if 'name' not in request.json:
-        return jsonify({"error" : "Missing Name"}), 401
+        return jsonify({"error": "Missing Name"}), 401
     state_class = models.classes['State']
-    new_ins = state_class(**form)
-    new_ins.save()
-    return jsonify(new_ins.to_dict(), 201)
+    new_state = state_class(**form)
+    new_state.save()
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
@@ -45,6 +45,7 @@ def delete_state(state_id):
         storage.save()
     return jsonify({})
 
+
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     '''Updates State object attribute'''
@@ -56,4 +57,4 @@ def update_state(state_id):
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state_obj, k, v)
     state_obj.save()
-    return jsonify(state_obj.to_dict(), 200)
+    return jsonify(state_obj.to_dict()), 200
