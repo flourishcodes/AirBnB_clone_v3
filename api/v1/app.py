@@ -9,7 +9,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-app.url_map.strict_slases = False
+app.url_map.strict_slashes = False
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     port = getenv('HBNB_API_PORT')
     if port is None:
         port = 5000
-    app.run(host, int(port), threaded=True)
+    app.run(host=host, port=int(port), threaded=True)
