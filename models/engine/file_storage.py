@@ -18,16 +18,17 @@ class FileStorage:
             Return the dictionary
         '''
         new_dict = {}
-        if cls is None:
+        if cls is None or cls is "":
             return self.__objects
-
-        if cls != "":
+        try:
+            if isinstance(cls, str) is True:
+                cls = models.classes[cls]
             for k, v in self.__objects.items():
-                if cls == k.split(".")[0]:
+                if isinstance(v, cls):
                     new_dict[k] = v
-            return new_dict
-        else:
-            return self.__objects
+        except Exception:
+            new_dict = {}
+        return new_dict
 
     def new(self, obj):
         '''
@@ -66,7 +67,7 @@ class FileStorage:
 
     def delete(self, obj=None):
         '''
-        Deletes an obj
+            Deletes an obj
         '''
         if obj is not None:
             key = str(obj.__class__.__name__) + "." + str(obj.id)
@@ -75,6 +76,27 @@ class FileStorage:
 
     def close(self):
         '''
-        Deserialize JSON file to objects
+            Deserialize JSON file to objects
         '''
         self.reload()
+
+    def get(self, cls, id):
+        '''
+            gets a specific 'cls' object with matching 'id'
+        '''
+        try:
+            for value in self.all(cls).values():
+                if value.id == id:
+                    return value
+        except:
+            return None
+        return None
+
+    def count(self, cls=None):
+        '''
+           returns the number of 'cls' object or all the objects
+        '''
+        if cls is None:
+            return len(self.all())
+        else:
+            return len(self.all(cls))
