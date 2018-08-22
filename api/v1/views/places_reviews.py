@@ -18,6 +18,7 @@ def all_places_reviews(city_id=None):
     except Exception:
         abort(404)
 
+
 @app_views.route('/reviews/<review_id>', methods=['GET'])
 def get_review(review_id):
     '''Retrieves a review for a place'''
@@ -26,6 +27,7 @@ def get_review(review_id):
         return jsonify(review)
     except Exception:
         abort(404)
+
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):

@@ -18,6 +18,7 @@ def all_city_places(city_id=None):
     except Exception:
         abort(404)
 
+
 @app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
     '''Retrieves a Place from storage'''
@@ -26,6 +27,7 @@ def get_place(place_id):
         return jsonify(place)
     except Exception:
         abort(404)
+
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
