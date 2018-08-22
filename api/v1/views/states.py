@@ -27,15 +27,13 @@ def create_state():
     '''Creates an instance of State and save it to storage'''
     form = request.get_json()
     if not request.json:
-        abort(400)
-        return jsonify({"error": "Not a JSON"})
+        return jsonify({"error": "Not a JSON"}), 401
     if 'name' not in request.json:
-        abort(400)
-        return jsonify({"error": "Missing Name"})
+        return jsonify({"error" : "Missing Name"}), 401
     state_class = models.classes['State']
     new_ins = state_class(**form)
     new_ins.save()
-    return jsonify(new_ins.to_dict())
+    return jsonify(new_ins.to_dict(), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
