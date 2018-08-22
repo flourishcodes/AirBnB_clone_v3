@@ -48,12 +48,12 @@ def delete_state(state_id):
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     '''Updates State object attribute'''
-    try:
-        state_obj = storage.get('State', state_id)
-        form = request.get_json(force=True)
-        for k, v in form.items():
-            setattr(state_obj, k, v)
-        state_obj.save()
-        return jsonify(state_obj.to_dict(), 200)
-    except:
+    state_obj = storage.get('State', state_id)
+    if state_obj is None:
         abort(404)
+    form = request.get_json(force=True)
+    for k, v in form.items():
+        if k not in ['id', 'created_at', 'updated_at']:
+            setattr(state_obj, k, v)
+    state_obj.save()
+    return jsonify(state_obj.to_dict(), 200)
