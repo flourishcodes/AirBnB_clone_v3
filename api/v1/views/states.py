@@ -25,9 +25,7 @@ def all_states(state_id=None):
 @app_views.route('/states/', methods=['POST'])
 def create_state():
     '''Creates an instance of State and save it to storage'''
-    form = request.get_json()
-    if not request.json:
-        return jsonify({"error": "Not a JSON"}), 401
+    form = request.get_json(force=True)
     if 'name' not in request.json:
         return jsonify({"error" : "Missing Name"}), 401
     state_class = models.classes['State']
@@ -39,13 +37,12 @@ def create_state():
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     '''Deletes a state object'''
-    try:
-        state_obj = storage.get('State', state_id)
+    state_obj = storage.get('State', state_id)
+    if state_obj is None:
+        abort(404)
+    else:
         storage.delete(state_obj)
         storage.save()
-    except:
-        abort(404)
-        return jsonify({})
     return jsonify({})
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
