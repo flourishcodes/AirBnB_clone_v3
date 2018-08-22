@@ -26,7 +26,10 @@ def all_states(state_id=None):
 def create_state():
     '''Creates an instance of State and save it to storage'''
     form = request.get_json()
-    if 'name' not in form:
+    if not request.json:
+        abort(400)
+        return jsonify({"error": "Not a JSON"})
+    if 'name' not in request.json:
         abort(400)
         return jsonify({"error": "Missing Name"})
     state_class = models.classes['State']
