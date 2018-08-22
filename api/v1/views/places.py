@@ -28,7 +28,7 @@ def get_place(place_id):
         abort(404)
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
-def delete_city(city_id):
+def delete_place(place_id):
     '''Deletes a City from storage'''
     place = storage.get('Place', place_id)
     if place is None:
@@ -52,8 +52,8 @@ def attrib_update(obj, **args):
                 setattr(obj, key, value)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'])
-def create_place(city_id):
+@app_views.route('/places/<place_id>/places', methods=['POST'])
+def create_place(place_id):
     '''Creates an instance of Amenity and save it to storage'''
     form = request.get_json(force=True)
     city = storage.get('City', city_id)
