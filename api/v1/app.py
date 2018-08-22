@@ -26,7 +26,7 @@ def error_handler(error):
 
 
 @app.errorhandler(400)
-def error_handler(error):
+def error_handler2(error):
     '''Returns a JSON formatted 404 status code'''
     return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
