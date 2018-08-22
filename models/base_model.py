@@ -32,12 +32,12 @@ class BaseModel:
         else:
             if kwargs.get("created_at"):
                 kwargs["created_at"] = datetime.strptime(
-                    kwargs["created_at"], "%Y-%m-%dT%H:%M:%S")
+                    kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
             else:
                 self.created_at = datetime.now()
             if kwargs.get("created_at"):
                 kwargs["updated_at"] = datetime.strptime(
-                    kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S")
+                    kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
             else:
                 self.updated_at = datetime.now()
             for key, val in kwargs.items():
