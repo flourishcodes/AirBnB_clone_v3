@@ -29,7 +29,7 @@ def attrib_update(obj, **args):
             value = value.replace("_", " ")
             try:
                 value = eval(value)
-            except:
+            except Exception:
                 pass
             setattr(obj, key, value)
 
@@ -39,7 +39,7 @@ def create_state():
     '''Creates an instance of State and save it to storage'''
     form = request.get_json(force=True)
     if 'name' not in request.json:
-        return jsonify({"error": "Missing Name"}), 401
+        return jsonify({"error": "Missing Name"}), 400
     state_class = models.classes['State']
     new_state = state_class()
     attrib_update(new_state, **form)

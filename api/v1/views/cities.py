@@ -49,7 +49,7 @@ def attrib_update(obj, **args):
             value = value.replace("_", " ")
             try:
                 value = eval(value)
-            except:
+            except Exception:
                 pass
             setattr(obj, key, value)
 
@@ -59,7 +59,7 @@ def create_city(state_id):
     '''Creates a new City'''
     form = request.get_json(force=True)
     if 'name' not in request.json:
-        return jsonify({"error": "Missing Name"}), 401
+        return jsonify({"error": "Missing Name"}), 400
     city_class = models.classes['City']
     new_city = city_class()
     attrib_update(new_city, **form)

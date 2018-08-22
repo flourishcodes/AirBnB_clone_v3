@@ -29,7 +29,7 @@ def attrib_update(obj, **args):
             value = value.replace("_", " ")
             try:
                 value = eval(value)
-            except:
+            except Exception:
                 pass
             setattr(obj, key, value)
 
