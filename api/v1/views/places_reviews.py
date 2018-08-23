@@ -11,7 +11,7 @@ import models
 
 @app_views.route('/places/<place_id>/reviews/', methods=['GET'])
 @app_views.route('/places/<place_id>/reviews', methods=['GET'])
-def all_places_reviews(city_id=None):
+def all_places_reviews(place_id):
     '''Returns all review object by palce_id in json format'''
     json_list = []
     try:
@@ -42,7 +42,7 @@ def delete_review(review_id):
     else:
         storage.delete(review)
         storage.save()
-        return (jsonify({}), 200)
+        return jsonify({}), 200
 
 
 def attrib_update(obj, **args):
@@ -61,23 +61,22 @@ def attrib_update(obj, **args):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def create_review(place_id):
     '''Creates an instance of Review and save it to storage'''
-    form = request.get_json(force=True)
     place = storage.get('Place', place_id)
     if place is None:
         abort(404)
+    form = request.get_json(force=True)
     if 'user_id' not in request.json:
-        abort(400, 'Missing user_id')
-    user = storage.get('User', user_id)
+        return jsonify({"error": "Missing user_id"}), 400
+    user = storage.get('User', form['user_id'])
     if user is None:
         abort(404)
     if 'text' not in request.json:
-        abort(400, 'Missing text')
+        return jsonify({"error": "Missing text"}), 400
     review_class = models.classes['Review']
-    new_review = review_class()
-    attrib_update(new_review, **form)
+    new_review = review_class(**form)
     setattr(new_review, 'place_id', place_id)
     new_review.save()
-    return jsonify(new_review.to_dict())
+    return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
