@@ -32,10 +32,6 @@ def error_handler2(error):
 
 
 if __name__ == "__main__":
-    host = getenv('HBNB_API_HOST')
-    if host is None:
-        host = '0.0.0.0'
-    port = getenv('HBNB_API_PORT')
-    if port is None:
-        port = 5000
-    app.run(host, int(port), threaded=True)
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = getenv('HBNB_API_PORT', 5000)
+    app.run(host=host, port=int(port), threaded=True)
