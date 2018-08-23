@@ -9,7 +9,6 @@ from api.v1 import app
 import models
 
 
-@app_views.route('/states/<state_id>/cities/', methods=['GET'])
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def all_state_cities(state_id=None):
     '''Returns all ciities in state object'''
@@ -85,5 +84,4 @@ def update_city(city_id):
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(city_obj, k, v)
     city_obj.save()
-    print(city_obj)
     return jsonify(city_obj.to_dict()), 200
