@@ -10,17 +10,16 @@ import models
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
+@app_views.route('/states/<state_id>/cities/', methods=['GET'])
 def all_state_cities(state_id=None):
     '''Returns all ciities in state object'''
     json_list = []
-
-    try:
-        city_list = storage.get('State', state_id).cities
-        for city in city_list:
-            json_list.append(city.to_dict())
-        return jsonify(json_list)
-    except Exception:
+    city_list = storage.get('State', state_id).cities
+    if city_list is None:
         abort(404)
+    for city in city_list:
+        json_list.append(city.to_dict())
+    return jsonify(json_list)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
@@ -62,11 +61,9 @@ def create_city(state_id):
     '''Creates a new City'''
     if storage.get('State', state_id) is None:
         abort(404)
-    if not request.get_json():
-        abort(400, "Not a JSON")
     form = request.get_json(force=True)
     if 'name' not in request.json:
-        abort(400, "Missing name")
+        return jsonify({"error": "Missing name"}), 400
     city_class = models.classes['City']
     new_city = city_class()
     attrib_update(new_city, **form)

@@ -8,8 +8,8 @@ from os import getenv
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
-app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
@@ -22,6 +22,12 @@ def tear_down(exception):
 def error_handler(error):
     '''Returns a JSON formatted 404 status code'''
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.errorhandler(400)
+def error_handler2(error):
+    '''Returns a JSON formatted 404 status code'''
+    return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
 
 if __name__ == "__main__":
