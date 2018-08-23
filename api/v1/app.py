@@ -9,7 +9,6 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
