@@ -65,7 +65,7 @@ def create_city(state_id):
     if storage.get('State', state_id) is None:
         abort(404)
     if 'name' not in request.json:
-        return jsonify({"error": "Missing Name"}), 400
+        return jsonify({"error": "Missing name"}), 400
     city_class = models.classes['City']
     new_city = city_class()
     attrib_update(new_city, **form)

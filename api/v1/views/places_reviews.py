@@ -9,6 +9,7 @@ from api.v1 import app
 import models
 
 
+@app_views.route('/places/<place_id>/reviews/', methods=['GET'])
 @app_views.route('/places/<place_id>/reviews', methods=['GET'])
 def all_places_reviews(city_id=None):
     '''Returns all review object by palce_id in json format'''
