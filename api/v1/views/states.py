@@ -42,7 +42,7 @@ def create_state():
     '''Creates an instance of State and save it to storage'''
     form = request.get_json(force=True)
     if 'name' not in request.json:
-        return jsonify({"error": "Missing Name"}), 400
+        return jsonify({"error": "Missing name"}), 400
     state_class = models.classes['State']
     new_state = state_class()
     attrib_update(new_state, **form)
