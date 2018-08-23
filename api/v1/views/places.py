@@ -58,22 +58,20 @@ def attrib_update(obj, **args):
                 setattr(obj, key, value)
 
 
-@app_views.route('/places/<place_id>/places', methods=['POST'])
-def create_place(place_id):
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
+def create_place(city_id):
     '''Creates an instance of Amenity and save it to storage'''
-    form = request.get_json(force=True)
     city = storage.get('City', city_id)
     if city is None:
         abort(404)
-    if 'user_id' not in request.json:
-        abort(400, 'Missing user_id')
-    user = storage.get('User', user_id)
-    if user is None:
-        abort(404)
+    form = request.get_json(force=True)
     if 'name' not in request.json:
-        abort(400, 'Missing name')
+        return jsonify({"error": "Missing name"}), 400
+    if 'user_id' not in request.json:
+        return jsonify({"error": "Missing user_id"}), 400
+    user = storage.get('User', form['user_id'])
     place_class = models.classes['Place']
-    new_place = place_class()
+    new_place = place_class(**form)
     attrib_update(new_place, **form)
     setattr(new_place, 'city_id', city_id)
     new_place.save()
