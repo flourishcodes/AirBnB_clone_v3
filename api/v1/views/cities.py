@@ -10,7 +10,6 @@ import models
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
-@app_views.route('/states/<state_id>/cities/', methods=['GET'])
 def all_state_cities(state_id=None):
     '''Returns all ciities in state object'''
     json_list = []
@@ -61,11 +60,13 @@ def attrib_update(obj, **args):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
     '''Creates a new City'''
-    form = request.get_json(force=True)
     if storage.get('State', state_id) is None:
         abort(404)
+    if not request.get_json():
+        abort(400, "Not a JSON")
+    form = request.get_json(force=True)
     if 'name' not in request.json:
-        return jsonify({"error": "Missing name"}), 400
+        abort(400, "Missing name")
     city_class = models.classes['City']
     new_city = city_class()
     attrib_update(new_city, **form)
@@ -80,6 +81,8 @@ def update_city(city_id):
     city_obj = storage.get('City', city_id)
     if city_obj is None:
         abort(404)
+    if not request.get_json():
+        abort(400, "Not a JSON")
     form = request.get_json(force=True)
     for k, v in form.items():
         if k not in ['id', 'created_at', 'updated_at']:
