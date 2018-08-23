@@ -8,7 +8,7 @@ from models import storage
 from api.v1 import app
 import models
 
-@app_views.route('/cities/<city_id>/places/', methods=['GET'])
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
 def all_city_places(city_id=None):
     '''Returns all place object by city_id in json format'''
