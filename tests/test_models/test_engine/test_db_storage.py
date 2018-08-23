@@ -128,6 +128,7 @@ class test_DBStorage(unittest.TestCase):
         old_result = storage.all("User")
         del_user_obj = old_result[key]
         self.assertEqual(storage.count('User'), 1)
+        self.assertGreaterEqual(storage.count(), storage.count('User'))
         storage.delete(del_user_obj)
         new_result = storage.all("User")
         self.assertNotEqual(len(old_result), len(new_result))
