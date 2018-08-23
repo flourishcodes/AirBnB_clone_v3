@@ -110,6 +110,7 @@ class test_DBStorage(unittest.TestCase):
         storage.save
         get_user = storage.get('User', save_id)
         self.assertEqual(new_user1.id, get_user.id)
+        self.assertTrue(isinstance(get_user, User))
 
     def test_dbstorage_delete_and_count(self):
         '''
