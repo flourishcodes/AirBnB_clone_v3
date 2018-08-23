@@ -72,8 +72,7 @@ def create_place(city_id):
     if 'name' not in request.json:
         return jsonify({"error": "Missing name"}), 400
     place_class = models.classes['Place']
-    new_place = place_class()
-    attrib_update(new_place, **form)
+    new_place = place_class(**form)
     setattr(new_place, 'city_id', city_id)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
