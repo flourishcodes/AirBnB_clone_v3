@@ -41,7 +41,7 @@ def delete_place(place_id):
     else:
         storage.delete(place)
         storage.save()
-        return (jsonify({}), 200)
+        return jsonify({}), 200
 
 
 def attrib_update(obj, **args):
