@@ -65,10 +65,10 @@ def create_place(city_id):
     if city is None:
         abort(404)
     form = request.get_json(force=True)
-    if 'name' not in request.json:
-        return jsonify({"error": "Missing name"}), 400
     if 'user_id' not in request.json:
         return jsonify({"error": "Missing user_id"}), 400
+    if 'name' not in request.json:
+        return jsonify({"error": "Missing name"}), 400
     user = storage.get('User', form['user_id'])
     place_class = models.classes['Place']
     new_place = place_class(**form)
