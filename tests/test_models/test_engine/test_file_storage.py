@@ -28,6 +28,10 @@ class testFileStorage(unittest.TestCase):
         '''
         self.storage = FileStorage()
         self.my_model = BaseModel()
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
 
     def tearDown(self):
         '''
@@ -163,5 +167,7 @@ class testFileStorage(unittest.TestCase):
         self.assertEqual(fs2.count(), 9)
         num_state = self.storage.count()
         self.assertEqual(self.storage.count(State), 4)
+        self.assertGreaterEqual(storage.count(), storage.count('State'))
+        self.assertEqual(storage.count(), storage.count('BaseModel'))
         self.assertEqual(self.storage.count(), 9)
         self.assertEqual(self.storage.count('no class'), 0)
