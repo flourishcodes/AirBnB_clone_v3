@@ -33,7 +33,6 @@ class testFileStorage(unittest.TestCase):
         '''
             Cleaning up.
         '''
-
         try:
             os.remove("file.json")
         except FileNotFoundError:
@@ -144,6 +143,14 @@ class testFileStorage(unittest.TestCase):
         self.assertTrue(isinstance(return_state, State))
         get_none = fs.get(State, 'no id')
         self.assertTrue(get_none is None)
+        get_none2 = fs.get('no state', new_id)
+        self.assertTrue(get_none2 is None)
+
+    def test_raise(self):
+        '''
+           Test for Exception errors
+        '''
+        self.assertRaises(TypeError, storage.get, None)
 
     def test_count(self):
         '''
@@ -157,3 +164,4 @@ class testFileStorage(unittest.TestCase):
         num_state = self.storage.count()
         self.assertEqual(self.storage.count(State), 4)
         self.assertEqual(self.storage.count(), 9)
+        self.assertEqual(self.storage.count('no class'), 0)

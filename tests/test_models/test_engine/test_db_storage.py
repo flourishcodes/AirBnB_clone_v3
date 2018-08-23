@@ -134,6 +134,12 @@ class test_DBStorage(unittest.TestCase):
         self.assertEqual(storage.count('User'), 0)
         self.assertEqual(storage.count(), 1)
 
+    def test_raise(self):
+        '''
+           Test for Exception errors
+        '''
+        self.assertRaises(TypeError, storage.get, None)
+
     def test_model_storage(self):
         '''
             Test to check if storage is an instance for DBStorage
