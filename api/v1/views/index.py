@@ -9,13 +9,13 @@ from flask import jsonify
 from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status')
 def status():
     """Create status return"""
     return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats')
 def stats():
     '''Returns the classes with their instance counts'''
     stat = {
