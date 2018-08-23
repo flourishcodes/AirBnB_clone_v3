@@ -14,12 +14,13 @@ import models
 def all_state_cities(state_id=None):
     '''Returns all ciities in state object'''
     json_list = []
-    city_list = storage.get('State', state_id).cities
-    if city_list is None:
+    try:
+        city_list = storage.get('State', state_id).cities
+        for city in city_list:
+            json_list.append(city.to_dict())
+        return jsonify(json_list)
+    except Exception:
         abort(404)
-    for city in city_list:
-        json_list.append(city.to_dict())
-    return jsonify(json_list)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
