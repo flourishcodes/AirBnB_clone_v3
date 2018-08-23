@@ -82,7 +82,7 @@ class testFileStorage(unittest.TestCase):
         with open("file.json", encoding="UTF8") as fd:
             content = json.load(fd)
 
-        self.assertTrue(type(content) is dict)
+        self.assertTrue(isinstance(content, dict))
 
     def test_the_type_file_content(self):
         '''
@@ -105,7 +105,7 @@ class testFileStorage(unittest.TestCase):
         try:
             self.storage.reload()
             self.assertTrue(True)
-        except:
+        except BaseException:
             self.assertTrue(False)
 
     def test_delete(self):

@@ -18,6 +18,7 @@ class TestBase(unittest.TestCase):
     '''
         Testing the base class model.
     '''
+
     def setUp(self):
         '''
             Initializing instance.
