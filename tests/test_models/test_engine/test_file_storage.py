@@ -142,6 +142,8 @@ class testFileStorage(unittest.TestCase):
         self.assertTrue(new_id == return_state.id)
         self.assertTrue(new_state.id == return_state.id)
         self.assertTrue(isinstance(return_state, State))
+        get_none = fs.get(State, 'no id')
+        self.assertTrue(get_none is None)
 
     def test_count(self):
         '''
@@ -154,3 +156,4 @@ class testFileStorage(unittest.TestCase):
         self.assertEqual(fs2.count(), 9)
         num_state = self.storage.count()
         self.assertEqual(self.storage.count(State), 4)
+        self.assertEqual(self.storage.count(), 9)
