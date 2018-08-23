@@ -1,37 +1,43 @@
 #!/usr/bin/python3
-"""Python api built with flask"""
-from flask import Flask, jsonify, make_response
-from flask_cors import CORS
+'''
+    This module contains our entry point of our flask application.
+'''
+from flask import Flask, jsonify
 from models import storage
+from flask_cors import CORS
 from api.v1.views import app_views
-from os import getenv
+import os
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-app.register_blueprint(app_views)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.register_blueprint(app_views, url_prefix="/api/v1")
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def tear_down(exception):
-    '''Calls storage close on appcontext'''
+def close(err):
+    '''
+        This will call the close method.
+    '''
     storage.close()
 
 
 @app.errorhandler(404)
-def error_handler(error):
-    '''Returns a JSON formatted 404 status code'''
-    return jsonify({'error': 'Not found'}), 404
-
-
-@app.errorhandler(400)
-def error_handler2(error):
-    '''Returns a JSON formatted 404 status code'''
-    return make_response(jsonify({'error': 'Not a JSON'}), 400)
+def page_not_found_404(e):
+    '''
+        This will return 404 not found error.
+    '''
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
-    host = getenv('HBNB_API_HOST', '0.0.0.0')
-    port = getenv('HBNB_API_PORT', 5000)
-    app.run(host=host, port=int(port), threaded=True)
+    host = os.getenv("HBNB_API_HOST")
+    if host is None:
+        host = "0.0.0.0"
+    port = os.getenv("HBNB_API_PORT")
+    if port is None:
+        port = 5000
+    else:
+        port = int(port)
+    app.run(host=host, port=port, threaded=True)
