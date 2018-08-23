@@ -10,6 +10,7 @@ import models
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
+@app_views.route('/states/<state_id>/cities/', methods=['GET'])
 def all_state_cities(state_id=None):
     '''Returns all ciities in state object'''
     json_list = []
