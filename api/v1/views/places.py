@@ -49,11 +49,8 @@ def attrib_update(obj, **args):
     for key, value in args.items():
         if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
             if hasattr(obj, key):
-                value = value.replace("_", " ")
-                try:
-                    value = eval(value)
-                except Exception:
-                    pass
+                if isinstance(value, str):
+                    value = value.replace("_", " ")
                 setattr(obj, key, value)
 
 
@@ -86,11 +83,8 @@ def update_place(place_id):
     if place is None:
         abort(404)
     form = request.get_json(force=True)
-    print(type(form))
     if form is None:
         abort(400, "Not a JSON")
-    for key, value in form.items():
-        if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
-            setattr(place, key, value)
+    attrib_update(place, **form)
     place.save()
     return jsonify(place.to_dict()), 200
