@@ -86,6 +86,8 @@ def update_place(place_id):
     if place is None:
         abort(404)
     form = request.get_json(force=True)
+    if form is None:
+        abort(400, "Not a JSON")
     attrib_update(place, **form)
     place.save()
     return jsonify(place.to_dict()), 200
