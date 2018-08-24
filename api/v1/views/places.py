@@ -8,18 +8,18 @@ from models import storage
 import models
 
 
-@app_views.route('/cities/<city_id>/places/', methods=['GET'])
-@app_views.route('/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
 def all_city_places(city_id):
     '''Returns all place object by city_id in json format'''
     json_list = []
-    try:
-        place_list = storage.get('City', city_id).places
-        for place in place_list:
-            json_list.append(place.to_dict())
-        return jsonify(json_list)
-    except Exception:
+
+    place_list = storage.get('City', city_id)
+    if place_list is None:
         abort(404)
+    for place in place_list.places:
+        json_list.append(place.to_dict())
+    return jsonify(json_list)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'])
@@ -86,8 +86,11 @@ def update_place(place_id):
     if place is None:
         abort(404)
     form = request.get_json(force=True)
+    print(type(form))
     if form is None:
         abort(400, "Not a JSON")
-    attrib_update(place, **form)
+    for key, value in form.items():
+        if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
+            setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict()), 200
