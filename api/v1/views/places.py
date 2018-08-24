@@ -65,7 +65,7 @@ def create_place(city_id):
         abort(404)
     form = request.get_json(force=True)
     user_id_check = form.get('user_id')
-    if user_to_check is None:
+    if user_id_check is None:
         return jsonify({"error": "Missing user_id"}), 400
     user = storage.get('User', form['user_id'])
     if user is None:
