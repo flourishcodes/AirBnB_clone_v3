@@ -64,6 +64,8 @@ def create_place(city_id):
     if city is None:
         abort(404)
     form = request.get_json(force=True)
+    if form is None:
+        return jsonify({"error": "Not a JSON"}), 400
     if 'user_id' not in request.json:
         return jsonify({"error": "Missing user_id"}), 400
     user = storage.get('User', form['user_id'])
@@ -85,6 +87,8 @@ def update_place(place_id):
     if place is None:
         abort(404)
     form = request.get_json(force=True)
+    if form is None:
+        return jsonify({"error": "Not a JSON"}), 400
     attrib_update(place, **form)
     place.save()
     return jsonify(place.to_dict()), 200
