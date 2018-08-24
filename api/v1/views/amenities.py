@@ -27,12 +27,9 @@ def all_amenity(amenity_id=None):
 def attrib_update(obj, **args):
     '''Helper function to update objects attributes to correct types'''
     for key, value in args.items():
-        if hasattr(obj, key):
-            value = value.replace("_", " ")
-            try:
-                value = eval(value)
-            except Exception:
-                pass
+        if key not in ['id', 'created_at', 'updated_at'] and hasattr(obj, key):
+            if isinstance(value, str):
+                value = value.replace("_", " ")
             setattr(obj, key, value)
 
 
@@ -68,8 +65,6 @@ def update_amenity(amenity_id):
     if amenity_obj is None:
         abort(404)
     form = request.get_json(force=True)
-    for k, v in form.items():
-        if k not in ['id', 'created_at', 'updated_at']:
-            setattr(amenity_obj, k, v)
+    attrib_update(amenity_obj, **form)
     amenity_obj.save()
     return jsonify(amenity_obj.to_dict()), 200
