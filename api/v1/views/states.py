@@ -27,12 +27,9 @@ def all_states(state_id=None):
 def attrib_update(obj, **args):
     '''Helper function to update objects attributes to correct types'''
     for key, value in args.items():
-        if hasattr(obj, key):
-            value = value.replace("_", " ")
-            try:
-                value = eval(value)
-            except Exception:
-                pass
+        if k not in ['id', 'created_at', 'updated_at'] and hasattr(obj, key):
+            if isinstance(value, str):
+                value = value.replace("_", " ")
             setattr(obj, key, value)
 
 
@@ -68,8 +65,6 @@ def update_state(state_id):
     if state_obj is None:
         abort(404)
     form = request.get_json(force=True)
-    for k, v in form.items():
-        if k not in ['id', 'created_at', 'updated_at']:
-            setattr(state_obj, k, v)
+    attrib_update(state_obj, **form)
     state_obj.save()
     return jsonify(state_obj.to_dict()), 200
