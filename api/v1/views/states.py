@@ -27,7 +27,7 @@ def all_states(state_id=None):
 def attrib_update(obj, **args):
     '''Helper function to update objects attributes to correct types'''
     for key, value in args.items():
-        if k not in ['id', 'created_at', 'updated_at'] and hasattr(obj, key):
+        if key not in ['id', 'created_at', 'updated_at'] and hasattr(obj, key):
             if isinstance(value, str):
                 value = value.replace("_", " ")
             setattr(obj, key, value)
