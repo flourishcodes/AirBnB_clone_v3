@@ -47,12 +47,9 @@ def delete_city(city_id):
 def attrib_update(obj, **args):
     '''Helper function to update objects attributes to correct types'''
     for key, value in args.items():
-        if hasattr(obj, key):
-            value = value.replace("_", " ")
-            try:
-                value = eval(value)
-            except Exception:
-                pass
+        if key not in ['id', 'created_at', 'updated_at'] and hasattr(obj, key):
+            if isinstance(key, str):
+                value = value.replace("_", " ")
             setattr(obj, key, value)
 
 
@@ -81,8 +78,6 @@ def update_city(city_id):
     if not request.get_json():
         abort(400, "Not a JSON")
     form = request.get_json(force=True)
-    for k, v in form.items():
-        if k not in ['id', 'created_at', 'updated_at']:
-            setattr(city_obj, k, v)
+    attrib_update(city_obj, **form)
     city_obj.save()
     return jsonify(city_obj.to_dict()), 200
