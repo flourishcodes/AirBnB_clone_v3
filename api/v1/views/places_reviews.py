@@ -49,12 +49,9 @@ def attrib_update(obj, **args):
     for key, value in args.items():
         if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
             if hasattr(obj, key):
-                value = value.replace("_", " ")
-                try:
-                    value = eval(value)
-                except Exception:
-                    pass
-                setattr(obj, key, value)
+                if isinstance(value, str):
+                    value = value.replace("_", " ")
+            setattr(obj, key, value)
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
