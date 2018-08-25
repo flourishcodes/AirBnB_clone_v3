@@ -46,7 +46,8 @@ class HBNBCommand(cmd.Cmd):
                 key = i.split("=")[0]
                 value = i.split("=")[1]
                 if hasattr(cls, key) is True:
-                    value = value.replace("_", " ")
+                    if key != 'password':
+                        value = value.replace("_", " ")
                     try:
                         value = eval(value)
                     except:
