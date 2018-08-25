@@ -43,10 +43,10 @@ class BaseModel:
             for key, val in kwargs.items():
                 if "__class__" not in key:
                     if key == 'password':
-                            b = bytes(self.password, 'utf-8')
-                            md5 = hashlib.md5()
-                            md5.update(b)
-                            val = md5.hexdigest()
+                        b = bytes(val, 'utf-8')
+                        md5 = hashlib.md5()
+                        md5.update(b)
+                        val = md5.hexdigest()
                     setattr(self, key, val)
             if not self.id:
                 self.id = str(uuid.uuid4())
