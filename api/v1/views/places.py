@@ -106,13 +106,20 @@ def search_places():
         for place in city.places:
                 all_place.append(place)
 
-    if 'amenities' in request.json:
+    if 'amenities' in request.json and len(all_place) != 0:
         for amenity_id in form['amenities']:
             all_amenities.append(storage.get('Amenity', amenity_id))
         for amenity in all_amenities:
             for place in all_place:
                 if place not in amenity.place_amenities:
                     all_place.remove(place)
+    if 'amenities' in request.json and len(all_place) == 0:
+        for amenity_id in form['amenities']:
+            all_amenities.append(storage.get('Amenity', amenity_id))
+        for amenity in all_amenities:
+            for place in amenity.place_amenities:
+                place_list.append(place.to_dict())
+        return jsonify(place_list), 200
 
     for place in all_place:
         place_list.append(place.to_dict())
