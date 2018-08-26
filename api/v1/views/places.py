@@ -76,6 +76,49 @@ def create_place(city_id):
     return jsonify(new_place.to_dict()), 201
 
 
+@app_views.route('/places_search', methods=['POST'])
+def search_places():
+    '''
+    Searches places depending on:
+    states id - all places in states
+    cities id - all places in cities
+    amenities id - print only places with the following amenities
+    '''
+    form = request.get_json(force=True)
+    place_list = []
+    all_cities = []
+    all_amenities = []
+    all_place = []
+    if len(form) == 0:
+        all_place = storage.all('Place')
+        for place in all_place.values():
+            place_list.append(place.to_dict())
+        return jsonify(place_list), 200
+    if 'cities' in request.json:
+        for city_id in form['cities']:
+            all_cities.append(storage.get('City', city_id))
+    if 'states' in request.json:
+        for state_id in form['states']:
+            for city in storage.get('State', state_id).cities:
+                if city not in all_cities:
+                    all_cities.append(city)
+    for city in all_cities:
+        for place in city.places:
+                all_place.append(place)
+
+    if 'amenities' in request.json:
+        for amenity_id in form['amenities']:
+            all_amenities.append(storage.get('Amenity', amenity_id))
+        for amenity in all_amenities:
+            for place in all_place:
+                if place not in amenity.place_amenities:
+                    all_place.remove(place)
+
+    for place in all_place:
+        place_list.append(place.to_dict())
+    return jsonify(place_list), 200
+
+
 @app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
     '''Updates Amenity object attribute'''
