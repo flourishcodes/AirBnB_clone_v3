@@ -204,6 +204,14 @@ GET | /users/<user_id> | retrieves a certain user info | curl -X GET http://0.0.
 POST | /users/| creates a new user | curl -POST http://0.0.0.0:5000/api/v1/users -d '{"email": "Email@email.com", "password": "my_password"}'
 DELETE | /users/<user_id> | Deletes a certain user | curl -X DELETE http://0.0.0.0:5000/api/v1/users/<user_id>
 PUT | /users/<user_id>| updates a new user | curl -POST http://0.0.0.0:5000/api/v1/users/<user_id> -d '{"email": "NEWEmail@newemail.com", "password": "my_newpassword"}'
+----------------|--------|-------------|--------------|
+GET | /amenities | retrieves all amenities | curl -X GET http://0.0.0.0:5000/api/v1/amenities
+GET | /amenities/<amenity_id> | retrieves a certain amenities | curl -X GET http://0.0.0.0:5000/api/v1/amenities/<amenity_id>
+POST | /amenities | creates a new amenity | curl -X POST http://0.0.0.0:5000/api/v1/amenities -d '{"name": "Wifi"}'
+PUT | /amenities/<amenity_id> | updates an amenity | curl -X POST http://0.0.0.0:5000/api/v1/amenities/<amenity_id> -d '{"name": "Dogs Allowed"}'
+DELETE | /amenities/<amenity_id> | deletes an amenities object | curl -X DELETE http://0.0.0.0:5000/api/v1/amenities/<amenity_id>
+----------------|--------|-------------|--------------|
+GET | /places/<place_id>/reviews | reviews all reviews in certain place | curl -X GET http://0.0.0.0:5000/api/v1/places/<place_id>/reviews
 
 ## Resources
 * Fabric: [Usage1](https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments), [Usage2](https://www.pythonforbeginners.com/systems-programming/how-to-use-fabric-in-python), [Documenation](http://www.fabfile.org/)
