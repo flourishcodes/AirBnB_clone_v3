@@ -146,21 +146,48 @@ Confirm there are some data:
 echo "all" | HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 ./console.py
 ```
 
-### API
+### RESTful API
+
+#### Description
+Implement RESTful API that sends GET, POST, PUT and DELETE method requests which allows you to interact with the objects in the storage
 
 #### Usage
+
 1. Open two terminals
 
 2. From terminal1 ran the following command:
 
 ```HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app```
 
-3. From terminal2 use Curl to send a request method, for example:
+3. From terminal2 use Curl to send a request method
+```
+CURL -X <Rquest Method> http://0.0.0.0:5000/api/v1/<Route>
+```
+
+For example
 ```
 curl -X GET http://0.0.0.0:5000/api/v1/status
 ```
 This will return 
 ```{status: Ok}```
+
+More Example:
+```
+curl -X GET http://0.0.0.0:5000/api/v1/state
+```
+This will return all the state information in Json format
+
+Other routes:
+
+Method_Requests | Routes | Description | Usage Example
+----------------|--------|-------------|--------------|
+GET | /states/ | Retrieves all state objects | curl -X GET http://0.0.0.0:5000/api/v1/state
+GET | /states/<state_id> | Retrieves a specific state objects base on state_id | curl -X GET http://0.0.0.0:5000/api/v1/state/<state_id>
+POST | /states/ | creates a new state | curl -X POST http://0.0.0.0:5000/api/v1/state/<state_id> -d '{"name": "California"}
+DELETE | /states/<state_id> | Deletes a specific state object base on state_id | curl -X DELETE http://0.0.0.0:5000/api/v1/state/<state_id>
+PUT | /states/<state_id> | Updates a state attribute | curl -X PUT http://0.0.0.0:5000/api/v1/state/<state_id> -d '{"name": "new_name"} 
+----------------|--------|-------------|--------------|
+
 
 ## Resources
 * Fabric: [Usage1](https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments), [Usage2](https://www.pythonforbeginners.com/systems-programming/how-to-use-fabric-in-python), [Documenation](http://www.fabfile.org/)
