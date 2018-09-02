@@ -99,9 +99,24 @@ class test_DBStorage(unittest.TestCase):
         self.assertTrue(save_id in temp_list)
         self.assertIsInstance(obj, State)
 
-    def test_dbstorage_delete(self):
+    def test_get(self):
         '''
-            Testing delete method
+            Testing Get Method
+        '''
+        new_user1 = User(email="dragonballs@anime.com", password="wishes",
+                         first_name="Gouku", last_name="Saiyan")
+        storage.new(new_user1)
+        save_id = new_user1.id
+        storage.save
+        get_user = storage.get('User', save_id)
+        self.assertEqual(new_user1.id, get_user.id)
+        self.assertTrue(isinstance(get_user, User))
+        get_none = storage.get('User', 'no id')
+        self.assertTrue(get_none is None)
+
+    def test_dbstorage_delete_and_count(self):
+        '''
+            Testing delete and count method
         '''
         new_user = User(email="haha@hehe.com", password="abc",
                         first_name="Adriel", last_name="Tolentino")
@@ -112,9 +127,19 @@ class test_DBStorage(unittest.TestCase):
         storage.save()
         old_result = storage.all("User")
         del_user_obj = old_result[key]
+        self.assertEqual(storage.count('User'), 1)
+        self.assertGreaterEqual(storage.count(), storage.count('User'))
         storage.delete(del_user_obj)
         new_result = storage.all("User")
         self.assertNotEqual(len(old_result), len(new_result))
+        self.assertEqual(storage.count('User'), 0)
+        self.assertEqual(storage.count(), 1)
+
+    def test_raise(self):
+        '''
+           Test for Exception errors
+        '''
+        self.assertRaises(TypeError, storage.get, None)
 
     def test_model_storage(self):
         '''

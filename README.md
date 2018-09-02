@@ -146,6 +146,19 @@ echo "all" | HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOS
 
 ```curl -X GET http://0.0.0.0:5000/api/v1/status``` This will return ```{status: Ok}```
 
+#### API
+
+Usage Example:
+Open two terminals
+
+From terminal1 ran the following command:
+
+```HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app```
+
+From terminal2 use Curl to send a request method, for example:
+
+```curl -X GET http://0.0.0.0:5000/api/v1/status``` This will return ```{status: Ok}```
+
 ## Resources
 * Fabric: [Usage1](https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments), [Usage2](https://www.pythonforbeginners.com/systems-programming/how-to-use-fabric-in-python), [Documenation](http://www.fabfile.org/)
 * Nginx: [Beginner's Config file](http://nginx.org/en/docs/beginners_guide.html), [Root vs Alias](https://blog.heitorsilva.com/en/nginx/diferenca-entre-root-e-alias-do-nginx/), 

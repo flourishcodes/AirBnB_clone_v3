@@ -8,7 +8,7 @@ from datetime import datetime
 import models
 from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-
+import hashlib
 
 Base = declarative_base()
 
@@ -42,6 +42,11 @@ class BaseModel:
                 self.updated_at = datetime.now()
             for key, val in kwargs.items():
                 if "__class__" not in key:
+                    if key == 'password':
+                        b = bytes(val, 'utf-8')
+                        md5 = hashlib.md5()
+                        md5.update(b)
+                        val = md5.hexdigest()
                     setattr(self, key, val)
             if not self.id:
                 self.id = str(uuid.uuid4())
@@ -76,6 +81,9 @@ class BaseModel:
         cp_dct['__class__'] = self.__class__.__name__
         cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        if models.storage.__class__.__name__ == 'DBStorage':
+            if isinstance(self, models.classes['User']):
+                del cp_dct['password']
         if hasattr(self, "_sa_instance_state"):
             del cp_dct["_sa_instance_state"]
         return (cp_dct)

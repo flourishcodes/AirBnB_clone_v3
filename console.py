@@ -35,27 +35,33 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        try:
-            args = shlex.split(args)
-            new_instance = models.classes[args[0]]()
-            for i in args[1:]:
-                try:
-                    key = i.split("=")[0]
-                    value = i.split("=")[1]
-                    if hasattr(new_instance, key) is True:
-                        value = value.replace("_", " ")
-                        try:
-                            value = eval(value)
-                        except:
-                            pass
-                        setattr(new_instance, key, value)
-                except (ValueError, IndexError):
-                    pass
-            new_instance.save()
-            print(new_instance.id)
-        except:
+        args = shlex.split(args)
+        if args[0] not in models.classes.keys():
             print("** class doesn't exist **")
             return
+        form = {}
+        cls = models.classes[args[0]]
+        for i in args[1:]:
+            try:
+                key = i.split("=")[0]
+                value = i.split("=")[1]
+                if hasattr(cls, key) is True:
+                    if key != 'password':
+                        value = value.replace("_", " ")
+                    try:
+                        value = eval(value)
+                    except:
+                        pass
+                    form[key] = value
+            except (ValueError, IndexError):
+                pass
+        if len(form) > 0:
+            new_instance = models.classes[args[0]](**form)
+        else:
+            new_instance = models.classes[args[0]]()
+        new_instance.save()
+        print(new_instance.id)
+
 
     def do_show(self, args):
         '''

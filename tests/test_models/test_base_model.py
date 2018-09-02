@@ -18,6 +18,7 @@ class TestBase(unittest.TestCase):
     '''
         Testing the base class model.
     '''
+
     def setUp(self):
         '''
             Initializing instance.
@@ -30,6 +31,7 @@ class TestBase(unittest.TestCase):
         '''
             Removing instance.
         '''
+        time.sleep(2)
         del self.my_model
 
     def test_id_type(self):

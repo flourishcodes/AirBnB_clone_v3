@@ -5,7 +5,6 @@ API for State
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
-from api.v1 import app
 import models
 
 
@@ -28,12 +27,9 @@ def all_states(state_id=None):
 def attrib_update(obj, **args):
     '''Helper function to update objects attributes to correct types'''
     for key, value in args.items():
-        if hasattr(obj, key):
-            value = value.replace("_", " ")
-            try:
-                value = eval(value)
-            except Exception:
-                pass
+        if key not in ['id', 'created_at', 'updated_at'] and hasattr(obj, key):
+            if isinstance(value, str):
+                value = value.replace("_", " ")
             setattr(obj, key, value)
 
 
@@ -42,7 +38,7 @@ def create_state():
     '''Creates an instance of State and save it to storage'''
     form = request.get_json(force=True)
     if 'name' not in request.json:
-        return jsonify({"error": "Missing Name"}), 400
+        return jsonify({"error": "Missing name"}), 400
     state_class = models.classes['State']
     new_state = state_class()
     attrib_update(new_state, **form)
@@ -69,8 +65,6 @@ def update_state(state_id):
     if state_obj is None:
         abort(404)
     form = request.get_json(force=True)
-    for k, v in form.items():
-        if k not in ['id', 'created_at', 'updated_at']:
-            setattr(state_obj, k, v)
+    attrib_update(state_obj, **form)
     state_obj.save()
     return jsonify(state_obj.to_dict()), 200

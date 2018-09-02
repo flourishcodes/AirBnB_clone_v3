@@ -100,7 +100,7 @@ class DBStorage:
             for value in self.all(cls).values():
                 if value.id == id:
                     return value
-        except:
+        except BaseException:
             return None
         return None
 

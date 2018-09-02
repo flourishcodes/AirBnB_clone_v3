@@ -28,12 +28,15 @@ class testFileStorage(unittest.TestCase):
         '''
         self.storage = FileStorage()
         self.my_model = BaseModel()
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
 
     def tearDown(self):
         '''
             Cleaning up.
         '''
-
         try:
             os.remove("file.json")
         except FileNotFoundError:
@@ -82,7 +85,7 @@ class testFileStorage(unittest.TestCase):
         with open("file.json", encoding="UTF8") as fd:
             content = json.load(fd)
 
-        self.assertTrue(type(content) is dict)
+        self.assertTrue(isinstance(content, dict))
 
     def test_the_type_file_content(self):
         '''
@@ -105,7 +108,7 @@ class testFileStorage(unittest.TestCase):
         try:
             self.storage.reload()
             self.assertTrue(True)
-        except:
+        except BaseException:
             self.assertTrue(False)
 
     def test_delete(self):
@@ -142,6 +145,16 @@ class testFileStorage(unittest.TestCase):
         self.assertTrue(new_id == return_state.id)
         self.assertTrue(new_state.id == return_state.id)
         self.assertTrue(isinstance(return_state, State))
+        get_none = fs.get(State, 'no id')
+        self.assertTrue(get_none is None)
+        get_none2 = fs.get('no state', new_id)
+        self.assertTrue(get_none2 is None)
+
+    def test_raise(self):
+        '''
+           Test for Exception errors
+        '''
+        self.assertRaises(TypeError, storage.get, None)
 
     def test_count(self):
         '''
@@ -154,3 +167,7 @@ class testFileStorage(unittest.TestCase):
         self.assertEqual(fs2.count(), 9)
         num_state = self.storage.count()
         self.assertEqual(self.storage.count(State), 4)
+        self.assertGreaterEqual(storage.count(), storage.count('State'))
+        self.assertEqual(storage.count(), storage.count('BaseModel'))
+        self.assertEqual(self.storage.count(), 9)
+        self.assertEqual(self.storage.count('no class'), 0)
