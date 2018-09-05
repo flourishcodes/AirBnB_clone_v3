@@ -183,11 +183,44 @@ Method_Requests | Routes | Description | Usage Example
 ----------------|--------|-------------|--------------|
 GET | /states/ | Retrieves all state objects | curl -X GET http://0.0.0.0:5000/api/v1/state
 GET | /states/<state_id> | Retrieves a specific state objects base on state_id | curl -X GET http://0.0.0.0:5000/api/v1/state/<state_id>
-POST | /states/ | creates a new state | curl -X POST http://0.0.0.0:5000/api/v1/state/<state_id> -d '{"name": "California"}
+POST | /states/ | creates a new state | curl -X POST http://0.0.0.0:5000/api/v1/state/<state_id> -d '{"name": "California"}'
 DELETE | /states/<state_id> | Deletes a specific state object base on state_id | curl -X DELETE http://0.0.0.0:5000/api/v1/state/<state_id>
-PUT | /states/<state_id> | Updates a state attribute | curl -X PUT http://0.0.0.0:5000/api/v1/state/<state_id> -d '{"name": "new_name"} 
+PUT | /states/<state_id> | Updates a state attribute | curl -X PUT http://0.0.0.0:5000/api/v1/state/<state_id> -d '{"name": "new_name"}' 
 ----------------|--------|-------------|--------------|
-
+GET | /states/<state_id/cities | retrieves all the city in the State | curl -X GET http://0.0.0.0:5000/api/v1/state/<state_id>/cities
+GET | /cities/city_id | retrieves a city | curl -X GET http://0.0.0.0:5000/api/v1/cities/<city_id>
+POST | /<state_id>/cities | creates a new city in the State | curl -X POST http://0.0.0.0:5000/api/v1/state/<state_id>/cities -d '{"name": "Los Angeles"}'
+DELETE | /cities/<city_id> | Deletes a specific City Object | curl -X DELETE http://0.0.0.0:5000/api/v1/cities/<city_id>
+PUT | /cities/<city_id> | Updates a specific City object | curl -X PUT http://0.0.0.0:5000/api/v1/state/<state_id>/cities -d '{"name": "New Name"}'
+----------------|--------|-------------|--------------|
+GET | /cities/<city_id>/places | retrieves all places in the city | curl -X GET http://0.0.0.0:5000/api/v1/cities/<city_id>/places
+GET | /places/place_id/ | retrieves a certain place | curl -X GET http://0.0.0.0:5000/api/v1/places/<place_id>
+POST | /cities/<city_id>/places | creates a new place base on given city id | curl -X POST http://0.0.0.0:5000/api/v1/state/<state_id>/cities -d '{"name": "Beeutiful Home", "user_id": "some user id"}'
+POST | /places_search | retrieves all places specific to each city(ies), state(s) and amenity(ies). Amenity is exclusive | curl -X POST http://0.0.0.0:5000/api/v1/state/places_search -d '{"states": ["state_id1", "state_id2"], "cities": ["city_id1", city_id2, city_id3"], "amenities": ["amenity_id1", amenity_id2"]}
+PUT | /places/<place_id> | updates a certain place object |  curl -X POST http://0.0.0.0:5000/api/v1/state/<state_id>/cities -d '{"name": "new place name"}'
+----------------|--------|-------------|--------------|
+GET | /users | retrieves all list of all users | curl -X GET http://0.0.0.0:5000/api/v1/users
+GET | /users/<user_id> | retrieves a certain user info | curl -X GET http://0.0.0.0:5000/api/v1/users/<user_id>
+POST | /users/| creates a new user | curl -POST http://0.0.0.0:5000/api/v1/users -d '{"email": "Email@email.com", "password": "my_password"}'
+DELETE | /users/<user_id> | Deletes a certain user | curl -X DELETE http://0.0.0.0:5000/api/v1/users/<user_id>
+PUT | /users/<user_id>| updates a new user | curl -POST http://0.0.0.0:5000/api/v1/users/<user_id> -d '{"email": "NEWEmail@newemail.com", "password": "my_newpassword"}'
+----------------|--------|-------------|--------------|
+GET | /amenities | retrieves all amenities | curl -X GET http://0.0.0.0:5000/api/v1/amenities
+GET | /amenities/<amenity_id> | retrieves a certain amenities | curl -X GET http://0.0.0.0:5000/api/v1/amenities/<amenity_id>
+POST | /amenities | creates a new amenity | curl -X POST http://0.0.0.0:5000/api/v1/amenities -d '{"name": "Wifi"}'
+PUT | /amenities/<amenity_id> | updates an amenity | curl -X POST http://0.0.0.0:5000/api/v1/amenities/<amenity_id> -d '{"name": "Dogs Allowed"}'
+DELETE | /amenities/<amenity_id> | deletes an amenities object | curl -X DELETE http://0.0.0.0:5000/api/v1/amenities/<amenity_id>
+----------------|--------|-------------|--------------|
+GET | /places/<place_id>/reviews | retrieves all reviews in certain place | curl -X GET http://0.0.0.0:5000/api/v1/places/<place_id>/reviews
+GET | /reviews/<review_id> | retrives a certain review about a place | curl -X GET http://0.0.0.0:5000/api/v1/reviews/<review_id>
+POST | /places/<places_id>/reviews | creates a new reviews about a certain place | curl -X POST http://0.0.0.0:5000/api/v1/places/<place_id>/reviews -d '{"user_id": "Id of user", "text": "Text review and comment"}'
+PUT | /places/<places_id>/reviews | updates the text review about a certain place | curl -X PUT http://0.0.0.0:5000/api/v1/places/<place_id>/reviews -d '{"text": "Text review and comment"}'
+DELETE | /reviews/<review_id> | deletes a certain review about a place | curl -X DELETE http://0.0.0.0:5000/api/v1/reviews/<review_id>
+----------------|--------|-------------|--------------|
+GET | /places/<place_id>/amenities | retrieves all amenities in a certain place | curl -X GET http://0.0.0.0:5000/api/v1/places/<place_id>/amenities
+POST | /places/<places_id>/amenities/<amenity_id> | adds an existing amenity to a certain place | curl -X POST http://0.0.0.0:5000/api/v1/places/<place_id>/reviews -d '{"amenity_id": "some amenity id"}'
+DELETE | /places/<place_id>/amenities | deletes an amenity in a certain place | curl -X DELETE http://0.0.0.0:5000/api/v1/places/<place_id>/amenities
+----------------|--------|-------------|--------------|
 
 #### API
 
