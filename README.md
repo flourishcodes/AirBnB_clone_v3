@@ -179,7 +179,7 @@ This will return all the state information in Json format
 
 Other routes:
 
-Method_Requests | Routes | Description | Usage Example
+Method_Requests | Routes | Description        | Usage Example
 ----------------|--------|-------------|--------------|
 GET | /states/ | Retrieves all state objects | curl -X GET http://0.0.0.0:5000/api/v1/state
 GET | /states/<state_id> | Retrieves a specific state objects base on state_id | curl -X GET http://0.0.0.0:5000/api/v1/state/<state_id>
