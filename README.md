@@ -211,7 +211,16 @@ POST | /amenities | creates a new amenity | curl -X POST http://0.0.0.0:5000/api
 PUT | /amenities/<amenity_id> | updates an amenity | curl -X POST http://0.0.0.0:5000/api/v1/amenities/<amenity_id> -d '{"name": "Dogs Allowed"}'
 DELETE | /amenities/<amenity_id> | deletes an amenities object | curl -X DELETE http://0.0.0.0:5000/api/v1/amenities/<amenity_id>
 ----------------|--------|-------------|--------------|
-GET | /places/<place_id>/reviews | reviews all reviews in certain place | curl -X GET http://0.0.0.0:5000/api/v1/places/<place_id>/reviews
+GET | /places/<place_id>/reviews | retrieves all reviews in certain place | curl -X GET http://0.0.0.0:5000/api/v1/places/<place_id>/reviews
+GET | /reviews/<review_id> | retrives a certain review about a place | curl -X GET http://0.0.0.0:5000/api/v1/reviews/<review_id>
+POST | /places/<places_id>/reviews | creates a new reviews about a certain place | curl -X POST http://0.0.0.0:5000/api/v1/places/<place_id>/reviews -d '{"user_id": "Id of user", "text": "Text review and comment"}'
+PUT | /places/<places_id>/reviews | updates the text review about a certain place | curl -X PUT http://0.0.0.0:5000/api/v1/places/<place_id>/reviews -d '{"text": "Text review and comment"}'
+DELETE | /reviews/<review_id> | deletes a certain review about a place | curl -X DELETE http://0.0.0.0:5000/api/v1/reviews/<review_id>
+----------------|--------|-------------|--------------|
+GET | /places/<place_id>/amenities | retrieves all amenities in a certain place | curl -X GET http://0.0.0.0:5000/api/v1/places/<place_id>/amenities
+POST | /places/<places_id>/amenities/<amenity_id> | adds an existing amenity to a certain place | curl -X POST http://0.0.0.0:5000/api/v1/places/<place_id>/reviews -d '{"amenity_id": "some amenity id"}'
+DELETE | /places/<place_id>/amenities | deletes an amenity in a certain place | curl -X DELETE http://0.0.0.0:5000/api/v1/places/<place_id>/amenities
+----------------|--------|-------------|--------------|
 
 ## Resources
 * Fabric: [Usage1](https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments), [Usage2](https://www.pythonforbeginners.com/systems-programming/how-to-use-fabric-in-python), [Documenation](http://www.fabfile.org/)
