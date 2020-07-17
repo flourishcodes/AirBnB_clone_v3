@@ -94,9 +94,9 @@ To create a Database and user
 cat setup_mysql_dev.sql | sudo mysql
 ```
 This will create a Database and a new User:
-- DB Name: **hbnb_dev_db**
-- User Name: **hbnb_dev@localhost**
-- User Password: **hbnb_dev_pwd**
+- DB Name: **nope_dev_db**
+- User Name: **nope_dev@localhost**
+- User Password: **nope_dev_pwd**
 
 To launch the console application in interactive mode using **local filestorage** simply run:
 
@@ -106,23 +106,23 @@ To launch the console application in interactive mode using **local filestorage*
 
 To use with **Database Storage**:
 ```
-HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 ./console.py
+nope_MYSQL_USER=nope_dev nope_MYSQL_PWD=nope_dev_pwd nope_MYSQL_HOST=localhost nope_MYSQL_DB=nope_dev_db nope_TYPE_STORAGE=db nope_API_HOST=0.0.0.0 nope_API_PORT=5000 ./console.py
 ```
 
 Usage and expected behavior: 
 ```
-(hbnb) <command_name> <class name> <attribute=value>
+(nope) <command_name> <class name> <attribute=value>
 <Returned Id>
-(hbnb)
+(nope)
 ```
 
 Example:
    
    ```
-(hbnb) command_name State name=Texas
-(hbnb) Create State name=California
-(hbnb) Create City name=San_Francisco state_id=<the returned california id>
-(hbnb) Show City <The return San Francisco id>
+(nope) command_name State name=Texas
+(nope) Create State name=California
+(nope) Create City name=San_Francisco state_id=<the returned california id>
+(nope) Show City <The return San Francisco id>
    ```
 
 To use the non-interactive mode run:
@@ -137,13 +137,13 @@ Want some data in your Database for testing?
 Download some dummy data.
 
 ```
-wget https://s3.amazonaws.com/intranet-projects-files/notreblohschool-higher-level_programming+/290/100-hbnb.sql
-cat 100-hbnb.sql | sudo mysql
+wget https://s3.amazonaws.com/intranet-projects-files/notreblohschool-higher-level_programming+/290/100-nope.sql
+cat 100-nope.sql | sudo mysql
 ```
 
 Confirm there are some data:
 ```
-echo "all" | HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 ./console.py
+echo "all" | nope_MYSQL_USER=nope_dev nope_MYSQL_PWD=nope_dev_pwd nope_MYSQL_HOST=localhost nope_MYSQL_DB=nope_dev_db nope_TYPE_STORAGE=db nope_API_HOST=0.0.0.0 nope_API_PORT=5000 ./console.py
 ```
 
 ### RESTful API
@@ -157,7 +157,7 @@ Implement RESTful API that sends GET, POST, PUT and DELETE method requests which
 
 2. From terminal1 ran the following command:
 
-```HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app```
+```nope_MYSQL_USER=nope_dev nope_MYSQL_PWD=nope_dev_pwd nope_MYSQL_HOST=localhost nope_MYSQL_DB=nope_dev_db nope_TYPE_STORAGE=db nope_API_HOST=0.0.0.0 nope_API_PORT=5000 python3 -m api.v1.app```
 
 3. From terminal2 use Curl to send a request method
 ```

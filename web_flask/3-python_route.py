@@ -2,8 +2,8 @@
 """
 script starts Flask web app
     listen on 0.0.0.0, port 5000
-    routes: /:              display "Hello HBNB!"
-            /hbnb:          display "HBNB"
+    routes: /:              display "Hello nope!"
+            /nope:          display "nope"
             /c/<text>:      display "C" + text (replace underscores with space)
             /python/<text>: display "Python" + text (default is "is cool")
 """
@@ -14,15 +14,15 @@ app.url_map.strict_slashes = False
 
 
 @app.route('/')
-def hello_hbnb():
+def hello_nope():
     """display text"""
-    return "Hello HBNB!"
+    return "Hello nope!"
 
 
-@app.route('/hbnb')
-def hbnb():
+@app.route('/nope')
+def nope():
     """display text"""
-    return "HBNB"
+    return "nope"
 
 
 @app.route('/c/<text>')

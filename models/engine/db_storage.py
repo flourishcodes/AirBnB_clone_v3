@@ -20,13 +20,13 @@ class DBStorage:
 
     def __init__(self):
         '''
-            Create engine and link to MySQL databse (hbnb_dev, hbnb_dev_db)
+            Create engine and link to MySQL databse (nope_dev, nope_dev_db)
         '''
-        user = getenv("HBNB_MYSQL_USER")
-        pwd = getenv("HBNB_MYSQL_PWD")
-        host = getenv("HBNB_MYSQL_HOST")
-        db = getenv("HBNB_MYSQL_DB")
-        envv = getenv("HBNB_ENV", "none")
+        user = getenv("nope_MYSQL_USER")
+        pwd = getenv("nope_MYSQL_PWD")
+        host = getenv("nope_MYSQL_HOST")
+        db = getenv("nope_MYSQL_DB")
+        envv = getenv("nope_ENV", "none")
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
             user, pwd, host, db), pool_pre_ping=True)
         if envv == 'test':

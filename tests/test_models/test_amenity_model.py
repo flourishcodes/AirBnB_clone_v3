@@ -11,7 +11,7 @@ from models.amenity import Amenity
 from os import getenv, remove
 
 
-storage = getenv("HBNB_TYPE_STORAGE", "fs")
+storage = getenv("nope_TYPE_STORAGE", "fs")
 
 
 class TestAmenity(unittest.TestCase):

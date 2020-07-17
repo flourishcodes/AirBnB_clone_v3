@@ -8,11 +8,11 @@
 # Create symbolic link /data/web_static/current to data/web_static/releases/test
 #     delete and recreate symbolic link each time script's ran
 # Recursively assign ownership of /data/ folder to user and group 'ubuntu'
-# Update the Nginx config to serve content of /data/web_static/current/ to hbnb_static (ex: https://mydomainname.tech/hbnb_static)
+# Update the Nginx config to serve content of /data/web_static/current/ to nope_static (ex: https://mydomainname.tech/nope_static)
 #     restart Nginx
-# curl localhost/hbnb_static/index.html should return sample text"
+# curl localhost/nope_static/index.html should return sample text"
 
-ADD_WEBSTATIC="\\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n"
+ADD_WEBSTATIC="\\\tlocation /nope_static/ {\n\t\talias /data/web_static/current/;\n\t}\n"
 
 sudo apt-get update
 sudo apt-get -y upgrade

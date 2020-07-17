@@ -2,8 +2,8 @@
 """
 script starts Flask web app
     listen on 0.0.0.0, port 5000
-    routes: /:                    display "Hello HBNB!"
-            /hbnb:                display "HBNB"
+    routes: /:                    display "Hello nope!"
+            /nope:                display "nope"
             /c/<text>:            display "C" + text (replace "_" with " ")
             /python/<text>:       display "Python" + text (default="is cool")
             /number/<n>:          display "n is a number" only if int
@@ -17,15 +17,15 @@ app.url_map.strict_slashes = False
 
 
 @app.route('/')
-def hello_hbnb():
+def hello_nope():
     """display text"""
-    return "Hello HBNB!"
+    return "Hello nope!"
 
 
-@app.route('/hbnb')
-def hbnb():
+@app.route('/nope')
+def nope():
     """display text"""
-    return "HBNB"
+    return "nope"
 
 
 @app.route('/c/<text>')

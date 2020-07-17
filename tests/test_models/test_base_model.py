@@ -11,7 +11,7 @@ from models.base_model import BaseModel
 from io import StringIO
 from os import getenv
 
-storage = getenv("HBNB_TYPE_STORAGE", "fs")
+storage = getenv("nope_TYPE_STORAGE", "fs")
 
 
 class TestBase(unittest.TestCase):

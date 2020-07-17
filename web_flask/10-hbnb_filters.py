@@ -2,8 +2,8 @@
 """
 script starts Flask web app
     listen on 0.0.0.0, port 5000
-    routes: /:                    display "Hello HBNB!"
-            /hbnb:                display "HBNB"
+    routes: /:                    display "Hello nope!"
+            /nope:                display "nope"
             /c/<text>:            display "C" + text (replace "_" with " ")
             /python/<text>:       display "Python" + text (default="is cool")
             /number/<n>:          display "n is a number" only if int
@@ -12,7 +12,7 @@ script starts Flask web app
             /states_list & /states:  display HTML and state info from storage
             /cities_by_states:    display HTML and state, city relations
             /states/<id>:         display HTML and state, city given state id
-            /hbnb_filters:        display a HTML page like 6-index.html
+            /nope_filters:        display a HTML page like 6-index.html
 """
 from models import storage
 from flask import Flask, render_template
@@ -21,15 +21,15 @@ app.url_map.strict_slashes = False
 
 
 @app.route('/')
-def hello_hbnb():
+def hello_nope():
     """display text"""
-    return "Hello HBNB!"
+    return "Hello nope!"
 
 
-@app.route('/hbnb')
-def hbnb():
+@app.route('/nope')
+def nope():
     """display text"""
-    return "HBNB"
+    return "nope"
 
 
 @app.route('/c/<text>')
@@ -115,14 +115,14 @@ def html_if_stateID(id):
                            state_obj=state_obj)
 
 
-@app.route('/hbnb_filters')
+@app.route('/nope_filters')
 def html_filters():
     """display html page with working city/state filters & amenities
        runs with web static css files
     """
     state_objs = [s for s in storage.all("State").values()]
     amenity_objs = [a for a in storage.all("Amenity").values()]
-    return render_template('10-hbnb_filters.html',
+    return render_template('10-nope_filters.html',
                            state_objs=state_objs, amenity_objs=amenity_objs)
 
 

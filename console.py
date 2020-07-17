@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-    Implementing the console for the HBnB project.
+    Implementing the console for the nope project.
 '''
 import cmd
 import json
@@ -9,11 +9,11 @@ import models
 from models import storage
 
 
-class HBNBCommand(cmd.Cmd):
+class nopeCommand(cmd.Cmd):
     '''
         Contains the entry point of the command interpreter.
     '''
-    prompt = ("(hbnb) ")
+    prompt = ("(nope) ")
 
     def do_quit(self, args):
         '''
@@ -223,4 +223,4 @@ if __name__ == "__main__":
     '''
         Entry point for the loop.
     '''
-    HBNBCommand().cmdloop()
+    nopeCommand().cmdloop()

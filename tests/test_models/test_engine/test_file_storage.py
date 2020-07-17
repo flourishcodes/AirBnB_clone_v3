@@ -13,7 +13,7 @@ from models.base_model import BaseModel
 from models.state import State
 from models.engine.file_storage import FileStorage
 
-db = os.getenv("HBNB_TYPE_STORAGE")
+db = os.getenv("nope_TYPE_STORAGE")
 
 
 @unittest.skipIf(db == 'db', "Testing DBstorage only")

@@ -10,7 +10,7 @@ from models.base_model import BaseModel
 from models.city import City
 from os import getenv, remove
 
-storage = getenv("HBNB_TYPE_STORAGE", "fs")
+storage = getenv("nope_TYPE_STORAGE", "fs")
 
 
 class TestUser(unittest.TestCase):

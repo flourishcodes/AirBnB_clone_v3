@@ -10,7 +10,7 @@ from models.base_model import BaseModel
 from models.review import Review
 from os import getenv, remove
 
-storage = getenv("HBNB_TYPE_STORAGE", "fs")
+storage = getenv("nope_TYPE_STORAGE", "fs")
 
 
 class TestReview(unittest.TestCase):

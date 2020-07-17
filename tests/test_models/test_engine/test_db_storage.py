@@ -10,11 +10,11 @@ from models import storage
 from models.user import User
 from models.state import State
 from models import storage
-from console import HBNBCommand
+from console import nopeCommand
 from os import getenv
 from io import StringIO
 
-db = getenv("HBNB_TYPE_STORAGE")
+db = getenv("nope_TYPE_STORAGE")
 
 
 @unittest.skipIf(db != 'db', "Testing DBstorage only")
@@ -41,9 +41,9 @@ class test_DBStorage(unittest.TestCase):
 
     def create(self):
         '''
-            Create HBNBCommand()
+            Create nopeCommand()
         '''
-        return HBNBCommand()
+        return nopeCommand()
 
     def test_new(self):
         '''

@@ -9,11 +9,11 @@ from models import storage
 from models import State
 from models.engine.db_storage import DBStorage
 from io import StringIO
-from console import HBNBCommand
+from console import nopeCommand
 from unittest.mock import create_autospec
 from os import getenv
 
-db = getenv("HBNB_TYPE_STORAGE", "fs")
+db = getenv("nope_TYPE_STORAGE", "fs")
 
 
 class test_console(unittest.TestCase):
@@ -29,8 +29,8 @@ class test_console(unittest.TestCase):
         sys.stdout = self.backup
 
     def create(self):
-        ''' create an instance of the HBNBCommand class'''
-        return HBNBCommand()
+        ''' create an instance of the nopeCommand class'''
+        return nopeCommand()
 
     def test_quit(self):
         ''' Test quit exists'''
@@ -120,7 +120,7 @@ class test_console(unittest.TestCase):
             Test that create works
         '''
         console = self.create()
-        console.onecmd("create User email=adriel@hbnb.com password=abc")
+        console.onecmd("create User email=adriel@nope.com password=abc")
         self.assertTrue(isinstance(self.capt_out.getvalue(), str))
 
     def test_class_name(self):
