@@ -137,7 +137,7 @@ Want some data in your Database for testing?
 Download some dummy data.
 
 ```
-wget https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/290/100-hbnb.sql
+wget https://s3.amazonaws.com/intranet-projects-files/notreblohschool-higher-level_programming+/290/100-hbnb.sql
 cat 100-hbnb.sql | sudo mysql
 ```
 

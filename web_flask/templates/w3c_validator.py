@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-W3C validator for Holberton School
+W3C validator for notrebloh School
 
 For HTML and CSS files.
 
